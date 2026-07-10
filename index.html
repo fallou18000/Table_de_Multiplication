@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme qui affice la table de multiplication</title>
+</head>
+<body>
+    <form action="">
+        <input type="number"  id="nombre" placeholder="Veillez entrer un nombre">
+        <button type="submit" id="bouton">Afficher la table de multiplication</button>
+    </form>
+    <div id="resultat"></div>
+</body>
+<script>
+const bouton=document.getElementById("bouton");
+const nombre=document.getElementById('nombre');
+const resultat=document.getElementById("resultat");
+ function tableMultiplication(num){
+    if(num){
+
+   
+    for(let i=1;i<=10;i++){
+        resultat.innerHTML +=num + '*' + i + '=' + num*i + '<br/>'
+    }
+     }
+ }
+bouton.addEventListener('click',(event)=>{
+    event.preventDefault();
+    tableMultiplication(nombre.value);
+    nombre.value=""; 
+})
+    
+</script>
+</html>
