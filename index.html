@@ -3,33 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme qui affice la table de multiplication</title>
+    <title>Calendrier en JS</title>
 </head>
+<style>
+   body{
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+   }
+   .calendar .header{
+    display: flex;
+    gap: 20px;
+   }
+   .calendar .header button{
+    padding: 10px;
+    font-size: 40px;
+    border: none;
+    text-align: center;
+
+
+   }
+   .jours{
+    display: grid;
+    gap: 40px;
+    font-weight: bold;
+    padding: 10px;
+    grid-template-columns: repeat(7,1fr);
+   }
+    .dates{
+    display: grid;
+    gap: 40px;
+    font-weight: bold;
+    padding: 10px;
+    grid-template-columns: repeat(7,1fr);
+   }
+   .dates div{
+    background-color: aliceblue;
+    text-align: center;
+    padding: 10px;
+
+
+   }
+   .dates div:hover{
+    background-color: aqua;
+   }
+   .dates .today{
+    background-color: rgb(10, 20, 96);
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+</style>
 <body>
-    <form action="">
-        <input type="number"  id="nombre" placeholder="Veillez entrer un nombre">
-        <button type="submit" id="bouton">Afficher la table de multiplication</button>
-    </form>
-    <div id="resultat"></div>
+    <div class="calendar">
+        <div class="header">
+            <button id="prev">◀</button>
+            <h2 class="MoisAnnes"></h2>
+            <button id="next">▶</button>
+        </div>
+
+    </div>
+    <div>
+        
+        <div class="jours">
+            <div>Dimanche</div>
+            <div>Lundi</div>
+            <div>Mardi</div>
+            <div>Mercredi</div>
+            <div>Jeudi</div>
+            <div>Vendredi</div>
+            <div>Samedi</div>
+        </div>
+        <div id="dates" class="dates"></div>
+    </div>
 </body>
 <script>
-const bouton=document.getElementById("bouton");
-const nombre=document.getElementById('nombre');
-const resultat=document.getElementById("resultat");
- function tableMultiplication(num){
-    if(num){
+    const month=[
+        "Janvier",
+        "Fevier",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Aout",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Decembre"
+    ]
+    const anne = new Date();
+    const dates=document.getElementById('dates');
+    const elmt=document.querySelector('h2');
+    elmt.textContent=month [anne.getMonth()] + " " + anne.getFullYear();
 
-   
-    for(let i=1;i<=10;i++){
-        resultat.innerHTML +=num + '*' + i + '=' + num*i + '<br/>'
+    function afficherJours(){
+        dates.innerHTML='';
+
+        const premierjours=new Date(anne.getFullYear(),anne.getMonth(),1).getDay();
+        const dernierjours=new Date(anne.getFullYear(),anne.getMonth()+1,0).getDate();
+        for(let i=0;i<premierjours;i++){
+            const el=document.createElement('div');
+            dates.appendChild(el);
+        }
+const aujourdHui = new Date();
+        for(let i=1;i<=dernierjours;i++){
+            const el=document.createElement('div');
+            el.textContent=i;
+            dates.appendChild(el);
+            if (
+        i === aujourdHui.getDate() &&
+        anne.getMonth() === aujourdHui.getMonth() &&
+        anne.getFullYear() === aujourdHui.getFullYear()
+    ) {
+        el.classList.add("today");
     }
-     }
- }
-bouton.addEventListener('click',(event)=>{
-    event.preventDefault();
-    tableMultiplication(nombre.value);
-    nombre.value=""; 
-})
-    
+
+    dates.appendChild(el);
+        }
+    }
+
+    afficherJours();
+    const prev=document.getElementById('prev');
+    const next=document.getElementById('next');
+
+    prev.addEventListener('click',()=> {
+        anne.setMonth(anne.getMonth()-1);
+         elmt.textContent = month[anne.getMonth()] + " " + anne.getFullYear();
+         afficherJours();
+
+    });
+     next.addEventListener('click',()=> {
+        anne.setMonth(anne.getMonth()+1);
+         elmt.textContent = month[anne.getMonth()] + " " + anne.getFullYear();
+         afficherJours();
+
+    });
 </script>
 </html>
